@@ -13,9 +13,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Counter practice'),
     );
   }
 }
@@ -55,15 +55,31 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme theme = Theme.of(context).colorScheme;
     return Scaffold(
+      backgroundColor: theme.onPrimary,
+      appBar: AppBar(
+        title: Text(
+          widget.title,
+          style: TextStyle(color: theme.onPrimary, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: theme.primary,
+      ),
+      persistentFooterButtons: [
+        IconButton(onPressed: decrementCounter, icon: Icon(Icons.remove)),
+        IconButton(onPressed: incrementCounter, icon: Icon(Icons.add)),
+      ],
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('$_counter'),
-            Text('History'),
-            for (int count in _lastCounters) Text('$count'),
-            IconButton(onPressed: decrementCounter, icon: Icon(Icons.remove)),
-            IconButton(onPressed: incrementCounter, icon: Icon(Icons.add)),
+            Card(
+              color: theme.secondaryContainer,
+              child: Text(
+                '$_counter',
+                style: TextStyle(color: theme.onSecondaryContainer),
+              ),
+            ),
           ],
         ),
       ),
