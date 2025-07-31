@@ -38,8 +38,8 @@ class _MyHomePageState extends State<MyHomePage> {
       if (_lastCounters.length >= 10) {
         _lastCounters.removeAt(0);
       }
-      _lastCounters.add(_counter);
       _counter++;
+      _lastCounters.add(_counter);
     });
   }
 
@@ -48,13 +48,25 @@ class _MyHomePageState extends State<MyHomePage> {
       if (_lastCounters.length >= 10) {
         _lastCounters.removeAt(0);
       }
-      _lastCounters.add(_counter);
       _counter--;
+      _lastCounters.add(_counter);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            Text('$_counter'),
+            Text('History'),
+            for (int count in _lastCounters) Text('$count'),
+            IconButton(onPressed: decrementCounter, icon: Icon(Icons.remove)),
+            IconButton(onPressed: incrementCounter, icon: Icon(Icons.add)),
+          ],
+        ),
+      ),
+    );
   }
 }
