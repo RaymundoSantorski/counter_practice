@@ -31,15 +31,24 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  List<int> _lastCounters = [];
 
   void incrementCounter() {
     setState(() {
+      if (_lastCounters.length >= 10) {
+        _lastCounters.removeAt(0);
+      }
+      _lastCounters.add(_counter);
       _counter++;
     });
   }
 
   void decrementCounter() {
     setState(() {
+      if (_lastCounters.length >= 10) {
+        _lastCounters.removeAt(0);
+      }
+      _lastCounters.add(_counter);
       _counter--;
     });
   }
