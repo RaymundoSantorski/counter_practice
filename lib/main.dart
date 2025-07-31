@@ -13,9 +13,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Counter practice'),
     );
   }
 }
@@ -38,8 +38,8 @@ class _MyHomePageState extends State<MyHomePage> {
       if (_lastCounters.length >= 10) {
         _lastCounters.removeAt(0);
       }
-      _lastCounters.add(_counter);
       _counter++;
+      _lastCounters.add(_counter);
     });
   }
 
@@ -48,13 +48,41 @@ class _MyHomePageState extends State<MyHomePage> {
       if (_lastCounters.length >= 10) {
         _lastCounters.removeAt(0);
       }
-      _lastCounters.add(_counter);
       _counter--;
+      _lastCounters.add(_counter);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    ColorScheme theme = Theme.of(context).colorScheme;
+    return Scaffold(
+      backgroundColor: theme.onPrimary,
+      appBar: AppBar(
+        title: Text(
+          widget.title,
+          style: TextStyle(color: theme.onPrimary, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: theme.primary,
+      ),
+      persistentFooterButtons: [
+        IconButton(onPressed: decrementCounter, icon: Icon(Icons.remove)),
+        IconButton(onPressed: incrementCounter, icon: Icon(Icons.add)),
+      ],
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Card(
+              color: theme.secondaryContainer,
+              child: Text(
+                '$_counter',
+                style: TextStyle(color: theme.onSecondaryContainer),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
