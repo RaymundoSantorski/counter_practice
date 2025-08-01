@@ -38,8 +38,8 @@ class _MyHomePageState extends State<MyHomePage> {
       if (_lastCounters.length >= 10) {
         _lastCounters.removeAt(0);
       }
-      _counter++;
       _lastCounters.add(_counter);
+      _counter++;
     });
   }
 
@@ -48,8 +48,8 @@ class _MyHomePageState extends State<MyHomePage> {
       if (_lastCounters.length >= 10) {
         _lastCounters.removeAt(0);
       }
-      _counter--;
       _lastCounters.add(_counter);
+      _counter--;
     });
   }
 
@@ -66,20 +66,58 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: theme.primary,
       ),
       persistentFooterButtons: [
-        IconButton(onPressed: decrementCounter, icon: Icon(Icons.remove)),
-        IconButton(onPressed: incrementCounter, icon: Icon(Icons.add)),
+        Row(
+          children: [
+            IconButton(onPressed: decrementCounter, icon: Icon(Icons.remove)),
+            Expanded(
+              child: Center(
+                child: SizedBox(
+                  width: 100,
+                  height: 40,
+                  child: Card(
+                    color: theme.secondaryContainer,
+                    child: Center(
+                      child: Text(
+                        '$_counter',
+                        style: TextStyle(
+                          color: theme.onSecondaryContainer,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            IconButton(onPressed: incrementCounter, icon: Icon(Icons.add)),
+          ],
+        ),
       ],
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Card(
-              color: theme.secondaryContainer,
-              child: Text(
-                '$_counter',
-                style: TextStyle(color: theme.onSecondaryContainer),
+            for (int count in _lastCounters)
+              Center(
+                child: SizedBox(
+                  width: 100,
+                  height: 60,
+                  child: Card(
+                    color: theme.secondaryContainer,
+                    child: Center(
+                      child: Text(
+                        '$count',
+                        style: TextStyle(
+                          color: theme.onSecondaryContainer,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
-            ),
           ],
         ),
       ),
