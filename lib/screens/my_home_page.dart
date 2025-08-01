@@ -2,6 +2,7 @@ import 'package:counter_practice/widgets/History.dart';
 import 'package:counter_practice/widgets/current_counter.dart';
 import 'package:counter_practice/widgets/persistent_footer_buttons.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -16,35 +17,71 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   List<int> _lastCounters = [];
 
-  void incrementCounter(int value) {
+  @override
+  void initState() {
+    super.initState();
+    getCounter();
+  }
+
+  Future<void> getCounter() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int counter = prefs.getInt('counter') ?? -2;
+    List<String> lastCounters = prefs.getStringList('history') ?? [];
+    print(counter);
+    setState(() {
+      _counter = counter;
+      _lastCounters = lastCounters.map((value) => int.parse(value)).toList();
+    });
+  }
+
+  Future<void> incrementCounter(int value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       if (_lastCounters.length >= 10) {
         _lastCounters.removeAt(0);
       }
       _lastCounters.add(_counter);
-      _counter += value;
+      _counter = (prefs.getInt('counter') ?? 0) + value;
+      prefs.setInt('counter', _counter);
+      prefs.setStringList(
+        'history',
+        _lastCounters.map((value) => '$value').toList(),
+      );
     });
   }
 
-  void decrementCounter(int value) {
+  Future<void> decrementCounter(int value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       if (_lastCounters.length >= 10) {
         _lastCounters.removeAt(0);
       }
       _lastCounters.add(_counter);
-      _counter -= value;
+      _counter = (prefs.getInt('counter') ?? 0) - value;
+      prefs.setInt('counter', _counter);
+      prefs.setStringList(
+        'history',
+        _lastCounters.map((value) => '$value').toList(),
+      );
     });
   }
 
-  void deleteHistory() {
+  Future<void> deleteHistory() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       _lastCounters = [];
+      prefs.setStringList(
+        'history',
+        _lastCounters.map((value) => '$value').toList(),
+      );
     });
   }
 
-  void resetCounter() {
+  Future<void> resetCounter() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       _counter = 0;
+      prefs.setInt('counter', _counter);
     });
   }
 
