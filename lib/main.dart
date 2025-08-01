@@ -53,6 +53,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void deleteHistory() {
+    setState(() {
+      _lastCounters = [];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     ColorScheme theme = Theme.of(context).colorScheme;
@@ -95,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ],
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: deleteHistory,
         backgroundColor: theme.primary,
         child: Icon(Icons.restart_alt, size: 40, color: theme.onPrimary),
       ),
