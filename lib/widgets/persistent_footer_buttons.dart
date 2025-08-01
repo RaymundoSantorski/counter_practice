@@ -21,17 +21,17 @@ class _PersistentFooterButtonsState extends State<PersistentFooterButtons> {
   @override
   Widget build(BuildContext context) {
     ColorScheme theme = Theme.of(context).colorScheme;
-    final TextEditingController _controller = TextEditingController(
+    final TextEditingController controller = TextEditingController(
       text: '$value',
     );
 
     void onTextChanged() {
       try {
         setState(() {
-          value = int.parse(_controller.text);
+          value = int.parse(controller.text);
         });
       } catch (error) {
-        _controller.text = '$value';
+        controller.text = '$value';
         return;
       }
     }
@@ -52,7 +52,7 @@ class _PersistentFooterButtonsState extends State<PersistentFooterButtons> {
                 child: TextField(
                   decoration: InputDecoration(border: InputBorder.none),
                   onSubmitted: (value) => onTextChanged(),
-                  controller: _controller,
+                  controller: controller,
                   textAlign: TextAlign.center,
                   keyboardType: TextInputType.number,
                   style: TextStyle(

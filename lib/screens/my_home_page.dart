@@ -42,6 +42,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void resetCounter() {
+    setState(() {
+      _counter = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     ColorScheme theme = Theme.of(context).colorScheme;
@@ -69,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SafeArea(
         child: Column(
           children: [
-            CurrentCounter(counter: _counter),
+            CurrentCounter(counter: _counter, reset: resetCounter),
             Divider(color: theme.primary, indent: 20, endIndent: 20),
             Expanded(child: History(history: _lastCounters)),
           ],
