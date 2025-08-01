@@ -94,6 +94,11 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: theme.primary,
+        child: Icon(Icons.restart_alt, size: 40, color: theme.onPrimary),
+      ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
