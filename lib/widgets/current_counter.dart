@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class CurrentCounter extends StatelessWidget {
-  const CurrentCounter({super.key, required this.counter});
+  const CurrentCounter({super.key, required this.counter, required this.reset});
   final int counter;
+  final reset;
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +15,26 @@ class CurrentCounter extends StatelessWidget {
         child: Card(
           color: theme.secondaryContainer,
           child: Center(
-            child: Text(
-              '$counter',
-              style: TextStyle(
-                color: theme.onSecondaryContainer,
-                fontSize: 50,
-                fontWeight: FontWeight.w900,
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  '$counter',
+                  style: TextStyle(
+                    color: theme.onSecondaryContainer,
+                    fontSize: 50,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                IconButton(
+                  onPressed: reset,
+                  icon: Icon(
+                    Icons.restore,
+                    size: 35,
+                    color: theme.onPrimaryFixedVariant,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
